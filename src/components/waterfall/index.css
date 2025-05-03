@@ -26,6 +26,9 @@
 }
 
 .masonry-item .masonry-item-text {
+  /* width: 100%; */
   font-size: 16px;
-  padding: 0 10px;
+  padding: 0 20px;
+  overflow-wrap: break-word;
+  /* word-wrap: break-word; */
 }
