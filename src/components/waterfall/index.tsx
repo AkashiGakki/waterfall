@@ -13,7 +13,8 @@ import {
   paperPng,
   notePng,
   plantPng,
-  winePng
+  winePng,
+  videoDemo,
 } from '../../assets'
 import './index.css'
 
@@ -21,7 +22,7 @@ function generateItems ()  {
   return Array.from({ length: 10 }, (_, i) => {
    return {
      id: getRandom() as number + i,
-     url: getRandom([bookPng, hanaPng, viewPng, tablePng, forestPng, flowerPng, paperPng, notePng, plantPng, winePng]),
+     url: getRandom([bookPng, hanaPng, viewPng, tablePng, forestPng, flowerPng, paperPng, notePng, plantPng, winePng, videoDemo]),
      text: getRandom(100) as string
    }
  })
@@ -54,7 +55,21 @@ function Waterfall() {
     default: 3,
     1100: 3,
     700: 2,
-    400: 1
+    340: 1
+  }
+
+  function source(url) {
+    if (url !== videoDemo) {
+      return (
+        <img src={url} alt='pics' loading='lazy' />
+      )
+    } else {
+      return (
+        <video autoPlay src={url} controls loop muted playsInline className='masonry-video'>
+          Your browser does not support the video tag.
+        </video>
+      )
+    }
   }
 
   return (
@@ -65,7 +80,7 @@ function Waterfall() {
     >
       {itemsArr.map(item => (
         <div key={item.id} className='masonry-item'>
-          <img src={item.url} alt='pics' loading='lazy' />
+          {source(item.url)}
           <div className='masonry-item-text'>{item.text}</div>
         </div>
       ))}

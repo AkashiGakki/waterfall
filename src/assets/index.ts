@@ -9,6 +9,8 @@ import notePng from './pics/8.jpg'
 import plantPng from './pics/9.jpg'
 import winePng from './pics/10.jpg'
 
+import videoDemo from './video/slice.mp4' // Ensure you have a module declaration for .mp4 files
+
 export {
   bookPng,
   hanaPng,
@@ -19,5 +21,6 @@ export {
   paperPng,
   notePng,
   plantPng,
-  winePng
+  winePng,
+  videoDemo,
 }

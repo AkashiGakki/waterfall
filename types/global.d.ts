@@ -11,6 +11,11 @@ declare module '*.scss';
 declare module '*.sass';
 declare module '*.styl';
 
+declare module '*.mp4' {
+  const src: string;
+  export default src;
+}
+
 declare namespace NodeJS {
   interface ProcessEnv {
     /** NODE 内置环境变量, 会影响到最终构建生成产物 */
