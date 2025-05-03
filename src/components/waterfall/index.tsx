@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import Taro,{ usePullDownRefresh, useReachBottom } from '@tarojs/taro'
 import Masonry from 'react-masonry-css';
 
 import { getRandom } from '@/helpers';
@@ -15,15 +17,39 @@ import {
 } from '../../assets'
 import './index.css'
 
-const itemsArr = Array.from({ length: 10 }, (_, i) => {
-  return {
-    id: i + 1,
-    url: getRandom([bookPng, hanaPng, viewPng, tablePng, forestPng, flowerPng, paperPng, notePng, plantPng, winePng]),
-    text: getRandom(100) as string
-  }
-})
+function generateItems ()  {
+  return Array.from({ length: 10 }, (_, i) => {
+   return {
+     id: getRandom() as number + i,
+     url: getRandom([bookPng, hanaPng, viewPng, tablePng, forestPng, flowerPng, paperPng, notePng, plantPng, winePng]),
+     text: getRandom(100) as string
+   }
+ })
+}
 
-function waterfall() {
+function Waterfall() {
+  const [itemsArr, setItemsArr] = useState(generateItems())
+
+  usePullDownRefresh(() => {
+    console.log('Pull down to refresh.')
+    Taro.startPullDownRefresh()
+    setTimeout(() => {
+      Taro.stopPullDownRefresh()
+      const items = generateItems()
+      setItemsArr(items)
+    }, 1000)
+  })
+
+  useReachBottom(() => {
+    console.log('onReachBottom')
+    const items = generateItems()
+    setItemsArr([...itemsArr, ...items])
+  })
+
+  // useEffect(() => {
+  //   console.log('Waterfall component effect')
+  // }, [itemsArr])
+
   const breakpointColumns = {
     default: 3,
     1100: 3,
@@ -47,4 +73,4 @@ function waterfall() {
   )
 }
 
-export default waterfall
+export default Waterfall
