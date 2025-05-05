@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Taro,{ usePullDownRefresh, useReachBottom } from '@tarojs/taro'
+import Taro, { usePullDownRefresh, useReachBottom } from '@tarojs/taro'
 import Masonry from 'react-masonry-css';
 
 import { getRandom } from '@/helpers';
@@ -18,18 +18,20 @@ import {
 } from '../../assets'
 import './index.css'
 
-function generateItems ()  {
-  return Array.from({ length: 10 }, (_, i) => {
-   return {
-     id: getRandom() as number + i,
-     url: getRandom([bookPng, hanaPng, viewPng, tablePng, forestPng, flowerPng, paperPng, notePng, plantPng, winePng, videoDemo]),
-     text: getRandom(100) as string
-   }
- })
+function generateItems(count: number = 10) {
+  return Array.from({ length: count }, (_, i) => {
+    return {
+      id: getRandom() as number + i,
+      url: getRandom([bookPng, hanaPng, viewPng, tablePng, forestPng, flowerPng, paperPng, notePng, plantPng, winePng, videoDemo]),
+      text: getRandom(100) as string
+    }
+  })
 }
 
-function Waterfall() {
-  const [itemsArr, setItemsArr] = useState(generateItems())
+function Waterfall(
+  props: { count?: number }
+) {
+  const [itemsArr, setItemsArr] = useState(generateItems(props?.count ?? 10))
 
   usePullDownRefresh(() => {
     console.log('Pull down to refresh.')
